@@ -26,10 +26,11 @@ namespace Trimmer___CSC202_SP14022___Math_Ops
 {
     class Program
     {
+        // Set a max amount of entries the user can enter, that can be easily modified later.
         // If the user needs to manually enter more than 500 numbers, they need a shrink not a program.
         const int MAX_NUM_ENTRIES = 500;
 
-        //Array of stings for creation of simpel ordinal numbers
+        //Array of stings for creation of simple ordinal numbers
         static string[] ordSuffixList = new string[4] 
         {
             "st", "nd", "rd", "th"
@@ -39,41 +40,40 @@ namespace Trimmer___CSC202_SP14022___Math_Ops
         {
             // Declare and use at least 3 integer variables.
             int sum = 0;
-            long product = 1;
             int littleNum = 0;
             int bigNum = 0;
             int numEntries = 0;
 
+            // Used long for the product, because of the growing possibility of going outside the constraints of int.
+            // Product is inistialized to one to allow the use of a running product.
+            long product = 1;
+
             // Declare and use at least 1 float variable.
             float avg = 0.0f;
 
-            //Print Header for the first time.
+            //Print Header for the first time, before anything else is printed.
             ClearAndPrintHeader();
 
             // Get the number of entries the user would like to make.
             numEntries = GetNumEntries();
 
-            // Use an integer array to hold all user entered values.  This allows for easy expansion in the code.
+            // Create an integer array to hold all user entered values.  This allows for easy expansion in the code.
             int[] userEnteredValues = new int[numEntries];
-            // Loop through the integer array to initialize all indexes to 0.
-            for (int arrayIndex = 0; arrayIndex < numEntries; arrayIndex++)
-            {
-                userEnteredValues[arrayIndex] = 0;
-            }
 
-            // Get at least three integers from the user.
-            // Verivy that the values that the user enters are integers.
+            
+            // Get the users entries, and stor them in the array.
             for (int arrayIndex = 0; arrayIndex < numEntries; arrayIndex++)
             {
                 userEnteredValues[arrayIndex] = FetchNumber(arrayIndex + 1);
             }
 
+            // use a loop to determine a running sum and product.
             for (int arrayIndex = 0; arrayIndex < numEntries; arrayIndex++)
             {
-                // Determin the sum.
+                
                 sum += userEnteredValues[arrayIndex];
 
-                // Determine the product.
+                
                 product *= userEnteredValues[arrayIndex];
             }
 
@@ -96,9 +96,9 @@ namespace Trimmer___CSC202_SP14022___Math_Ops
                 }
             }
 
-            // Display the sum, average, product, smallest, and largest.
+            
             Console.Write("You entered the numbers ");
-            // print all values from the integer array.
+            // print all values from the integer array to display all the values the user entered.
             for (int arrayIndex = 0; arrayIndex < numEntries; arrayIndex++)
             {
                 if (arrayIndex < numEntries - 1)
@@ -110,6 +110,8 @@ namespace Trimmer___CSC202_SP14022___Math_Ops
                     Console.Write("and {0}.\n", userEnteredValues[arrayIndex]);
                 }
             }
+
+            // Display the sum, average, product, smallest, and largest.
             Console.WriteLine("\n\nThe sum is\t\t{0}", sum);
             Console.WriteLine("The average is\t\t{0}", avg);
             Console.WriteLine("The product is\t\t{0}", product);
@@ -117,14 +119,16 @@ namespace Trimmer___CSC202_SP14022___Math_Ops
             Console.WriteLine("The largest number is\t{0}", bigNum);
 
 
-            // Pause the consol so the user can read the input before it closes.
+            // Pause the consol so the user can read the output before it closes.
             Console.Write("\n\nPress any key to continue... ");
             Console.ReadKey(true);
         }
 
+
         static int FetchNumber(int usersCurNum)
         {
-            // Method to get the integer input
+            // Method to get the integer input from the user
+
             string ordNum = CardinalToOrdinal(usersCurNum);
             int tempNum = 0;
 
@@ -140,6 +144,7 @@ namespace Trimmer___CSC202_SP14022___Math_Ops
             ClearAndPrintHeader();
             return tempNum;
         }
+
 
         static int GetNumEntries()
         {
@@ -170,21 +175,28 @@ namespace Trimmer___CSC202_SP14022___Math_Ops
             return tempNum;
         }
 
+
         static string CardinalToOrdinal(int cardNum)
         {
+            // Method to take a cardinal number input, and to output a simple ordinal version of that number.
+
+
             string numStr = cardNum.ToString();
             int numStrLen = numStr.Length;
             int lastTwoDigits = 0;
 
+            // Only the last two digits of the number matter for this conversion.
             if (numStr.Length > 1)
             {
                 lastTwoDigits = int.Parse(numStr[numStrLen - 2].ToString() + numStr[numStrLen - 1].ToString());
             }
+            // If the number is only a single digit, attempting to get two digits will throw an error.
             else
             {
                 lastTwoDigits = int.Parse(numStr[numStrLen - 1].ToString());
             }
 
+            // Concatonate the proper ordinal suffix to the number.
             if (numStr.EndsWith("1") && lastTwoDigits != 11)
             {
                 numStr += "st";
@@ -205,8 +217,11 @@ namespace Trimmer___CSC202_SP14022___Math_Ops
             return numStr;
         }
 
+
         static void ClearAndPrintHeader()
         {
+            // Method to clear the console, and print my personal header.  
+
             Console.Clear();
 
             // Print my Header.
